@@ -1,0 +1,23 @@
+<div class="hello-container">
+  <p-card>
+    <ng-template #header>
+      <div class="card-header">
+        <i class="pi pi-star-fill" style="font-size: 2rem; color: #f59e0b;"></i>
+      </div>
+    </ng-template>
+
+    <div class="card-content">
+      <h1>Hello, World!</h1>
+      <p>ยินดีต้อนรับสู่ Angular + PrimeNG</p>
+
+      <p-tag value="PrimeNG v19" severity="success" />
+      &nbsp;
+      <p-tag value="Angular v19" severity="info" />
+
+      <div class="counter-section">
+        <p>คุณกดแล้ว <strong>{{ count }}</strong> ครั้ง</p>
+        <p-button label="กดฉันสิ!" icon="pi pi-thumbs-up" (onClick)="increment()" />
+      </div>
+    </div>
+  </p-card>
+</div>

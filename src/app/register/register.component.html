@@ -1,0 +1,176 @@
+<div class="register-page">
+
+  <div class="page-title">
+    <h1>ระบบลงทะเบียนนักศึกษา</h1>
+    <p>กรอกข้อมูลส่วนตัวและเลือกวิชาที่ต้องการลงทะเบียน</p>
+  </div>
+
+  <form [formGroup]="form">
+
+    <!-- Section 1: ข้อมูลส่วนตัว -->
+    <div class="section-card">
+      <h3 class="section-title">ข้อมูลส่วนตัว</h3>
+      <hr class="section-divider" />
+
+      <div class="form-grid">
+
+        <!-- รหัสนักศึกษา -->
+        <div class="field">
+          <label>รหัสนักศึกษา <span class="required">*</span></label>
+          <input pInputText formControlName="studentId" placeholder="เช่น 6512345678"
+            [class.ng-invalid]="isInvalid('studentId')" [class.ng-dirty]="isInvalid('studentId')" />
+          @if (isInvalid('studentId')) {
+            <small class="error-msg">กรุณากรอกรหัสนักศึกษา</small>
+          }
+        </div>
+
+        <!-- อีเมล -->
+        <div class="field">
+          <label>อีเมล <span class="required">*</span></label>
+          <input pInputText formControlName="email" placeholder="example@university.ac.th"
+            [class.ng-invalid]="isInvalid('email')" [class.ng-dirty]="isInvalid('email')" />
+          @if (isInvalid('email')) {
+            @if (form.get('email')?.errors?.['required']) {
+              <small class="error-msg">กรุณากรอกอีเมล</small>
+            } @else {
+              <small class="error-msg">รูปแบบอีเมลไม่ถูกต้อง</small>
+            }
+          }
+        </div>
+
+        <!-- ชื่อ -->
+        <div class="field">
+          <label>ชื่อ <span class="required">*</span></label>
+          <input pInputText formControlName="firstName" placeholder="ชื่อจริง"
+            [class.ng-invalid]="isInvalid('firstName')" [class.ng-dirty]="isInvalid('firstName')" />
+          @if (isInvalid('firstName')) {
+            <small class="error-msg">กรุณากรอกชื่อ</small>
+          }
+        </div>
+
+        <!-- นามสกุล -->
+        <div class="field">
+          <label>นามสกุล <span class="required">*</span></label>
+          <input pInputText formControlName="lastName" placeholder="นามสกุล"
+            [class.ng-invalid]="isInvalid('lastName')" [class.ng-dirty]="isInvalid('lastName')" />
+          @if (isInvalid('lastName')) {
+            <small class="error-msg">กรุณากรอกนามสกุล</small>
+          }
+        </div>
+
+        <!-- เบอร์โทรศัพท์ -->
+        <div class="field">
+          <label>เบอร์โทรศัพท์ <span class="required">*</span></label>
+          <input pInputText formControlName="phone" placeholder="0xx-xxx-xxxx"
+            [class.ng-invalid]="isInvalid('phone')" [class.ng-dirty]="isInvalid('phone')" />
+          @if (isInvalid('phone')) {
+            <small class="error-msg">กรุณากรอกเบอร์โทรศัพท์</small>
+          }
+        </div>
+
+        <!-- คณะ -->
+        <div class="field">
+          <label>คณะ <span class="required">*</span></label>
+          <input pInputText formControlName="faculty" placeholder="เช่น วิทยาศาสตร์"
+            [class.ng-invalid]="isInvalid('faculty')" [class.ng-dirty]="isInvalid('faculty')" />
+          @if (isInvalid('faculty')) {
+            <small class="error-msg">กรุณากรอกคณะ</small>
+          }
+        </div>
+
+        <!-- สาขาวิชา (full row) -->
+        <div class="field full-row">
+          <label>สาขาวิชา <span class="required">*</span></label>
+          <input pInputText formControlName="major" placeholder="เช่น วิทยาการคอมพิวเตอร์"
+            [class.ng-invalid]="isInvalid('major')" [class.ng-dirty]="isInvalid('major')" />
+          @if (isInvalid('major')) {
+            <small class="error-msg">กรุณากรอกสาขาวิชา</small>
+          }
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Section 2: เลือกวิชา -->
+    <div class="section-card">
+      <h3 class="section-title">เลือกวิชาลงทะเบียน</h3>
+      <hr class="section-divider" />
+
+      <div class="field">
+        <label>เลือกวิชา</label>
+        <div class="subject-select-row">
+          <p-select
+            [options]="subjectOptions"
+            [ngModel]="selectedSubject()"
+            (ngModelChange)="selectedSubject.set($event)"
+            [ngModelOptions]="{ standalone: true }"
+            optionLabel="desc"
+            optionValue="val"
+            placeholder="-- เลือกวิชา --"
+            styleClass="subject-dropdown"
+          />
+          <p-button
+            label="เพิ่มวิชา"
+            icon="pi pi-plus"
+            (onClick)="addSubject()"
+            [disabled]="!selectedSubject()"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 3: รายวิชาที่ลงทะเบียน -->
+    <div class="section-card">
+      <div class="section-header-row">
+        <h3 class="section-title" style="margin: 0">รายวิชาที่ลงทะเบียน</h3>
+        <span class="total-credits">จำนวนหน่วยกิตรวม: <strong>{{ totalCredits() }}</strong> หน่วยกิต</span>
+      </div>
+      <hr class="section-divider" />
+
+      <p-table [value]="registeredSubjects()" [tableStyle]="{ 'min-width': '500px' }">
+        <ng-template #header>
+          @if (registeredSubjects().length > 0) {
+            <tr>
+              <th>รหัสวิชา</th>
+              <th>ชื่อวิชา</th>
+              <th style="width: 100px; text-align: center">หน่วยกิต</th>
+              <th style="width: 80px"></th>
+            </tr>
+          }
+        </ng-template>
+        <ng-template #body let-subject>
+          <tr>
+            <td style="width: 110px">{{ subject.val }}</td>
+            <td>{{ subject.desc }}</td>
+            <td style="text-align: center">{{ subject.credits }}</td>
+            <td style="text-align: center">
+              <p-button
+                icon="pi pi-trash"
+                severity="danger"
+                [text]="true"
+                (onClick)="removeSubject(subject.val)"
+              />
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template #emptymessage>
+          <tr>
+            <td colspan="4" class="empty-table-msg">ยังไม่มีวิชาที่ลงทะเบียน</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+
+    <!-- Section 4: ปุ่มด้านล่าง -->
+    <div class="action-row">
+      <p-button label="ล้างข้อมูล" icon="pi pi-refresh" severity="secondary" (onClick)="resetForm()" />
+      <p-button
+        label="ยืนยันการลงทะเบียน"
+        icon="pi pi-check"
+        (onClick)="submit()"
+        [disabled]="!canSubmit()"
+      />
+    </div>
+
+  </form>
+</div>

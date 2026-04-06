@@ -1,0 +1,112 @@
+.page-header h2 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0 0 1rem;
+}
+
+.search-card,
+.table-card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.search-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+.search-title .pi {
+  color: #3b82f6;
+}
+
+.search-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.field label {
+  font-size: 0.875rem;
+  color: #475569;
+  font-weight: 500;
+}
+
+.field input {
+  width: 100%;
+}
+
+.search-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Column header filter toggle */
+.col-header {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  white-space: nowrap;
+}
+
+.col-header span {
+  flex: 1;
+  font-weight: 600;
+}
+
+.filter-icon-btn,
+.filter-close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 4px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  color: #94a3b8;
+  transition: color 0.15s, background 0.15s;
+}
+
+.filter-icon-btn:hover {
+  color: #3b82f6;
+  background: #eff6ff;
+}
+
+.filter-close-btn {
+  color: #ef4444;
+  flex-shrink: 0;
+}
+
+.filter-close-btn:hover {
+  background: #fef2f2;
+}
+
+.col-filter-input {
+  width: 100%;
+  min-width: 0;
+  font-size: 0.8rem !important;
+  padding: 0.25rem 0.5rem !important;
+  height: 30px !important;
+}
+
+.col-filter-select {
+  width: 100%;
+  min-width: 0;
+  font-size: 0.8rem;
+}

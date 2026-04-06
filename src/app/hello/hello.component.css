@@ -1,0 +1,37 @@
+.hello-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+.card-header {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0 0;
+}
+
+.card-content {
+  text-align: center;
+  padding: 1rem 2rem 2rem;
+}
+
+.card-content h1 {
+  font-size: 2.5rem;
+  color: #1e293b;
+  margin: 1rem 0 0.5rem;
+}
+
+.card-content p {
+  color: #64748b;
+  margin-bottom: 1.5rem;
+}
+
+.counter-section {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
